@@ -1,5 +1,6 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, filters, CallbackContext
+
 
 # כאן נזין את הטוקן שלך
 TOKEN = '7772604825:AAH3eIkicj4EDI7I6pF_rLRXDnxzuK5iGsU'
