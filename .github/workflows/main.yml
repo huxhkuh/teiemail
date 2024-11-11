@@ -24,6 +24,6 @@ jobs:
 
     - name: Run bot
       env:
-        TOKEN: ${{ secrets.BOT_TOKEN }}
+        TOKEN: ${{ secrets.BOT_TOKEN }}  # הגדרת משתנה הסביבה עבור הטוקן
       run: |
         python bot.py
