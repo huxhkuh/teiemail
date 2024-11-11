@@ -1,33 +1,34 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, filters, CallbackContext
 
+from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # כאן נזין את הטוקן שלך
-TOKEN = '7772604825:AAH3eIkicj4EDI7I6pF_rLRXDnxzuK5iGsU'
+import os
+TOKEN = os.getenv("TOKEN")
+
 
 # פונקציה שמגדירה את התגובה לפקודת /start
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("שלום! אני כאן לעזור לך.")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text("שלום! אני כאן לעזור לך.")
 
 # פונקציה שמגיבה לכל הודעת טקסט אחרת
-def echo(update: Update, context: CallbackContext) -> None:
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text
-    update.message.reply_text(f"כתבת: {text}")
+    await update.message.reply_text(f"כתבת: {text}")
 
 # הפונקציה הראשית שמריצה את הבוט
 def main():
-    updater = Updater(TOKEN)
-    dispatcher = updater.dispatcher
+    application = Application.builder().token(TOKEN).build()
 
     # הוספת המאזין לפקודת /start
-    dispatcher.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("start", start))
 
     # מאזין לכל הודעת טקסט
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
     # הפעלת הבוט
-    updater.start_polling()
-    updater.idle()
+    application.run_polling()
 
 if __name__ == '__main__':
     main()
+
